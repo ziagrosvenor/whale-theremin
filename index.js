@@ -32,7 +32,6 @@ const verbGain = ctx.createGain()
 const convolver = ctx.createConvolver()
 const output = ctx.createGain()
 
-var sullyBuf
 const req = new XMLHttpRequest()
 req.open("GET", "ir.wav", true)
 req.responseType = "arraybuffer"
@@ -40,9 +39,7 @@ req.responseType = "arraybuffer"
 req.onload = () => {
   const data = req.response
   ctx.decodeAudioData(data, (buf) => {
-    sullyBuf = buf
-    const sample = ctx.createBufferSource()
-    sample.buffer = buf
+    convolver.buffer = buf
     init()
   }, (err) => console.log(err))
 }
@@ -50,8 +47,11 @@ req.onload = () => {
 req.send()
 
 function init() {
-  convolver.buffer = sullyBuf
   const mixInput = ctx.createGain()
+  const cam = CamMotion.Engine()
+  const canvas = document.getElementById("view")
+  const canvasCtx = canvas.getContext("2d")
+  const img = document.getElementById("whale")
 
   osc.connect(filter)
   filter.connect(compressor)
@@ -63,21 +63,14 @@ function init() {
   gain.connect(output)
   output.gain.value = 0.8
   output.connect(ctx.destination)
-
   osc.start(0)
-
-  const cam = CamMotion.Engine()
-  const canvas = document.getElementById("view")
-  const canvasCtx = canvas.getContext("2d")
-  const img = document.getElementById("whale")
 
   cam.on("frame", () => {
     canvasCtx.clearRect(0, 0, 1000, 1500);
     const p = cam.getMovementPoint(true)
-
     canvasCtx.drawImage(img, p.x, p.y)
     osc.frequency.value = p.y
-    const x =  p.y / (p.y / 0.8)  / 1.0;
+    const x =  p.y / (p.y / 0.5)  / 1.0;
     const gain1 = Math.cos(x * 0.5*Math.PI);
     const gain2 = Math.cos((1.0 - x) * 0.5*Math.PI);
     verbGain.gain.value = gain1;
