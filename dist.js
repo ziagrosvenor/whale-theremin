@@ -3,7 +3,7 @@
 var ctx = new window.AudioContext();
 var DEFAULT_PITCH = 240;
 var DEFAULT_FREQ = 2000;
-var DEFAULT_GAIN = 0.2;
+var DEFAULT_GAIN = 0.1;
 
 function createOsc(pitch, wave) {
   var osc = ctx.createOscillator();
@@ -23,7 +23,7 @@ var compressor = ctx.createDynamicsCompressor();
 compressor.threshold.value = -50;
 compressor.knee.value = 40;
 compressor.ratio.value = 12;
-compressor.reduction.value = -30;
+compressor.reduction.value = -50;
 compressor.attack.value = 0;
 compressor.release.value = 0.25;
 
@@ -94,8 +94,7 @@ function init() {
     var p = cam.getMovementPoint(true);
 
     canvasCtx.drawImage(img, p.x, p.y);
-    osc.frequency.value = p.x;
-    output.gain.value = parseInt(p.y);
+    osc.frequency.value = Math.pow(p.y, 5);
   });
 
   cam.start();
