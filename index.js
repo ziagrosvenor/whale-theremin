@@ -33,7 +33,6 @@ const convolver = ctx.createConvolver()
 const output = ctx.createGain()
 
 var sullyBuf
-
 const req = new XMLHttpRequest()
 req.open("GET", "ir.wav", true)
 req.responseType = "arraybuffer"
@@ -52,9 +51,7 @@ req.send()
 
 function init() {
   convolver.buffer = sullyBuf
-  gain.gain.value = 0
   const mixInput = ctx.createGain()
-  const panNode = ctx.createStereoPanner()
 
   osc.connect(filter)
   filter.connect(compressor)
