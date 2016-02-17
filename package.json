@@ -1,0 +1,30 @@
+{
+  "name": "simple-web-hack",
+  "version": "1.0.0",
+  "description": "Whale sounding Theremin synthesiser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "./node_modules/http-server/bin/http-server -p 1111 -o"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ziagrosvenor/whale-theremin.git"
+  },
+  "keywords": [
+    "theremin",
+    "web",
+    "audio",
+    "api",
+    "js-cam-motion"
+  ],
+  "author": "Zia Grosvenor",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/ziagrosvenor/whale-theremin/issues"
+  },
+  "homepage": "https://github.com/ziagrosvenor/whale-theremin#readme",
+  "devDependencies": {
+    "http-server": "^0.8.5"
+  }
+}
