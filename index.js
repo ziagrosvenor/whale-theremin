@@ -26,7 +26,7 @@ compressor.attack.value = 0
 compressor.release.value = 0.25
 
 const osc = createOsc(DEFAULT_PITCH, "sawtooth")
-const filter = createFilter(DEFAULT_FREQ, "lowpass")
+const filter = createFilter(DEFAULT_FREQ, "lowshelf")
 const gain = ctx.createGain()
 const verbGain = ctx.createGain()
 const convolver = ctx.createConvolver()
@@ -48,8 +48,8 @@ req.send()
 
 function init() {
   const mixInput = ctx.createGain()
+  const canvas = document.getElementById("canvas-blended")
   const cam = CamMotion.Engine()
-  const canvas = document.getElementById("view")
   const canvasCtx = canvas.getContext("2d")
   const img = document.getElementById("whale")
 
@@ -66,15 +66,20 @@ function init() {
   osc.start(0)
 
   cam.on("frame", () => {
-    canvasCtx.clearRect(0, 0, 1000, 1500);
     const p = cam.getMovementPoint(true)
-    canvasCtx.drawImage(img, p.x, p.y)
-    osc.frequency.value = p.y
-    const x =  p.y / (p.y / 0.5)  / 1.0;
-    const gain1 = Math.cos(x * 0.5*Math.PI);
-    const gain2 = Math.cos((1.0 - x) * 0.5*Math.PI);
-    verbGain.gain.value = gain1;
-    gain.gain.value = gain2;
+
+    if (cam.getAverageMovement(p.x-p.r/2, p.y-p.r/2, p.r, p.r)>5) {
+      osc.frequency.value = p.x
+      filter.frequency.value = p.x * 2
+      canvasCtx.clearRect(0, 0, 1000, 1300)
+      canvasCtx.drawImage(img, p.x , p.y)
+    }
+    const x =  p.y / (p.y / 0.8)  / 1.0
+    const gain1 = Math.cos(x * 0.5*Math.PI)
+    const gain2 = Math.cos((1.0 - x) * 0.5*Math.PI)
+    verbGain.gain.value = gain1
+    gain.gain.value = gain2
+
   })
 
   cam.start()

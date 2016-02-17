@@ -4,27 +4,29 @@
     <title>Whale Theremin - Simple Web and BBC Radio 6 Music Hack Entry</title>
     <style>
       body {
-        background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/e0/Clouds_over_the_Atlantic_Ocean.jpg'); 
+        background-image: url('./ocean.jpg'); 
         background-size: 1000px 700px;
         background-repeat: no-repeat;
       }
 
       #whale {
         position: absolute; left: -1000px;
+        width: 100px;
+        height: 200px;
       }
 
     </style>
   </head>
 
   <body > 
-    <img id="whale" alt="whale" src="http://www.enviro-print.com.au/SaveTheBilbyFund/Animations/Whale-spin.gif"/>
-    <canvas id="view" width="1000" height="1500"></canvas>
-    <script src="./js-cam-motion/lib/circularbuffer.js"></script>
-    <script src="./js-cam-motion/lib/events.js"></script>
-    <script src="./js-cam-motion/lib/detectors.js"></script>
-    <script src="./js-cam-motion/lib/main.js"></script>
-    <script src="./index.js"></script>
+    <img id="whale" alt="whale" src="./whale.png"/>
 
+    <canvas id="canvas-blended" width="1000" height="1500"></canvas>
+    <script language="JavaScript" src="../js-cam-motion/lib/circularbuffer.js"></script>
+    <script language="JavaScript" src="../js-cam-motion/lib/events.js"></script>
+    <script language="JavaScript" src="../js-cam-motion/lib/detectors.js"></script>
+    <script language="JavaScript" src="./js-cam-motion/lib/main.js"></script>
+    <script src="./index.js"></script>
     <header>
       <div class="inner">
         <h1>Whale-theremin</h1>
